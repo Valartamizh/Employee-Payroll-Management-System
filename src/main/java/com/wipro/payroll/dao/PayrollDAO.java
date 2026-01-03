@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.naming.spi.DirStateFactory.Result;
@@ -62,7 +63,7 @@ public class PayrollDAO {
 	}
 
 	public String generateRecordID(String employeeName, Date paymentDate) {
-		
+
 		try {
 			Statement st = con.createStatement();
 			ResultSet rs = st.executeQuery("select payroll_seq.nextval from dual");
@@ -77,14 +78,15 @@ public class PayrollDAO {
 	}
 
 	public boolean recordExists(String employeeName, Date paymentDate) {
-		
+
 		try {
-			PreparedStatement ps = con.prepareStatement("select * from payroll_tbl where employeeName=? and paymentDate=?");
+			PreparedStatement ps = con
+					.prepareStatement("select * from payroll_tbl where employeeName=? and paymentDate=?");
 			ps.setString(1, employeeName);
 			ps.setDate(2, paymentDate);
-			
-			return ps.executeUpdate() > 0; 
-		}catch(Exception e) {
+
+			return ps.executeUpdate() > 0;
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return false;
@@ -92,7 +94,29 @@ public class PayrollDAO {
 	}
 
 	public List<PayrollBean> fetchAllRecords() {
-		return null;
+		
+		List<PayrollBean> list = new ArrayList<PayrollBean>();
+		try {
+			PreparedStatement ps = con.prepareStatement("Select * from payroll_tbl");
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				PayrollBean bean = new PayrollBean();
+
+	            bean.setRecordId(rs.getString("record_id"));
+	            bean.setEmployeeName(rs.getString("employee_name"));
+	            bean.setDesignation(rs.getString("designation"));
+	            bean.setPaymentDate(rs.getDate("payment_date"));
+	            bean.setSalary(rs.getInt("salary"));
+	            bean.setDepartment(rs.getString("department"));
+	            bean.setRemarks(rs.getString("remarks"));
+
+	            list.add(bean);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list;
 
 	}
 }
