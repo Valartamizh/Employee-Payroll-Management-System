@@ -8,7 +8,8 @@
 <body>
 
 <%
-List<PayrollBean> list = (List<PayrollBean>) request.getAttribute("payrollList");
+PayrollBean roll =new PayrollBean();
+List<PayrollBean> list = new ArrayList<>();
 
 if (list == null || list.isEmpty()) {
 %>

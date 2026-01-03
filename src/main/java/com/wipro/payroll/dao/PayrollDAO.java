@@ -9,10 +9,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.naming.spi.DirStateFactory.Result;
-
-import com.wipro.payroll.util.*;
 import com.wipro.payroll.bean.PayrollBean;
+import com.wipro.payroll.util.DBUtil;
+import com.wipro.payroll.util.InvalidInputException;
 
 public class PayrollDAO {
 	Connection con = DBUtil.getDBConnection();
