@@ -21,14 +21,4 @@ public class DBUtil {
 		}
 		return con;
 	}
-	public static void main(String[] args) {
-		try{
-			Connection con=DBUtil.getDBConnection();
-		if(con!=null) {
-			System.out.println("Working");
-		}
-		}catch(Exception e) {
-			System.out.println(e);
-		}
-	}
 }
